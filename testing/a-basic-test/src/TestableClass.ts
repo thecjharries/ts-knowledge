@@ -4,7 +4,6 @@ export class TestableClass {
     }
 
     public promiseToReturnFortySeven(): Promise<number> {
-        const self = this;
-        return Promise.resolve(self.returnFortySeven());
+        return Promise.resolve(this.returnFortySeven());
     }
 }
