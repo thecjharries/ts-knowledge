@@ -241,3 +241,21 @@ import { mock, SinonMock, SinonSpy, SinonStub, spy, stub } from "sinon";
 * [Sinon `spy`s](//sinonjs.org/releases/v2.2.0/spies/) are passive method watchers. They record information about the call without touching the call itself. They can replace a method in code or be passed as a callback to something else.
 * [Sinon `stub`s](//sinonjs.org/releases/v2.2.0/stubs/) are active method replacements. They allow you to replace any method with with your desired logic. The docs list many great ideas, including different behaviors for multiple calls or different arguments.
 * [Sinon `mock`s](//sinonjs.org/releases/v2.2.0/mocks/) are passive method watchers with expectations. Mocks define expectations up front, instead of after as with assertions.
+
+## Mocking Global Functions
+
+Preview:
+
+Use `typeof` and `mockery`
+
+## Mocking `console`
+
+Preview:
+
+Stub in `beforeEach`, `restore` before assertions. If you can't `restore` before assertions, you're probably SOL.
+
+## Code Coverage with `nyc`
+
+Preview:
+
+Just read the output.
