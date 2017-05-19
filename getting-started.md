@@ -6,7 +6,7 @@
 
 ```shell
 npm install --save-dev \
-    typescript \
+    typescript source-map-support \
     ts-node @types/node \
 ```
 
@@ -28,7 +28,7 @@ This is my `tsconfig.json`:
     "module": "commonjs",
     /* Strict Type-Checking Options */
     "strict": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     /* Experimental Options */
     "experimentalDecorators": true,
     "lib": [ "es6", "dom" ]

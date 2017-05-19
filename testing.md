@@ -71,7 +71,7 @@ package.json
 
 ## A Basic Test
 
-`src/TestableClass.ts`
+### `src/TestableClass.ts`
 ```typescript
 export class TestableClass {
     public constructor() {
@@ -87,7 +87,9 @@ export class TestableClass {
     }
 }
 ```
-`test/TestableClass.spec.ts`
+### `test/TestableClass.spec.ts`
+
+#### Code
 ```typescript
 // Things like ...be.true; or ...be.rejected; dont play nice with TSLint
 /* tslint:disable:no-unused-expression */
@@ -107,3 +109,18 @@ describe("Testable class", () => {
     let 
 });
 ```
+#### Notes
+
+* I've chosen to keep Sinon inside the `sinon` object instead of pulling its children out into the global scope. That's totally personal preference. Because I'm mixing and matching several different testing libraries, I feel like the code is more readable when you know where the methods are coming from.
+```typescript
+// This
+import * as sinon from "sinon";
+// instead of this
+import { mock, SinonMock, SinonSpy, SinonStub, spy, stub } from "sinon";
+```
+* `testableClass` is type `TestableClass | null` (a [union type](//www.typescriptlang.org/docs/handbook/advanced-types.html#union-types)) because my `tsconfig.json` has `strictNullChecks` turned on. While it's not necessary, I've found that it's more expressive to do it this way, and it's easier for non-JS devs to follow.
+* `testableClass` methods are called via `testableClass!.methodName`. `!` (in this context) is the [non-null assertion operator](//www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-type-assertions), which is necessary to let the compiler know that `testableClass` isn't `null` here. Granted, it would be simpler to just turn off `strictNullChecks`, but now anyone reading the code knows `testableClass` is explicitly not null here. Maintenance is easier when code is not ambiguous.
+* Tests that rely on promises must return [the promise chain](//mochajs.org/#working-with-promises).
+* [Sinon `spy`s](//sinonjs.org/releases/v2.2.0/spies/) are passive method watchers. They record information about the call without touching the call itself. They can replace a method in code or be passed as a callback to something else.
+* [Sinon `stub`s](//sinonjs.org/releases/v2.2.0/stubs/) are active method replacements. They allow you to replace any method with with your desired logic. The docs list many great ideas, including different behaviors for multiple calls or different arguments.
+* [Sinon `mock`s](//sinonjs.org/releases/v2.2.0/mocks/) are passive method watchers with expectations. Mocks define expectations up front, instead of after as with assertions.
